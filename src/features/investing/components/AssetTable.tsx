@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
-import type { Asset, AssetTableConfig } from '../types';
+import type { Asset, TableConfig } from '../types';
 import { formatCurrency, formatPercentage } from '../utils';
 
 interface AssetTableProps<T extends Asset> {
   assets: T[];
-  config: AssetTableConfig;
+  config: TableConfig;
   totalValue: number;
   totalTarget: number;
   recommendation: T;
@@ -12,6 +12,7 @@ interface AssetTableProps<T extends Asset> {
   children?: ReactNode;
 }
 
+// Simplified AssetTable - applying YAGNI principle
 const AssetTable = <T extends Asset>({
   assets,
   config,
@@ -38,26 +39,22 @@ const AssetTable = <T extends Asset>({
         <table className="w-full border-collapse">
           <thead>
             <tr className={`${config.headerColor} text-white`}>
-              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.asset}</th>
-              {config.columns.currentValue && (
-                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
-                  {config.columns.currentValue}
-                </th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">ATIVO</th>
+              {'currentValue' in assets[0] && (
+                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">VALOR</th>
               )}
-              {config.columns.quantity && (
-                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.quantity}</th>
+              {'quantity' in assets[0] && (
+                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">QUANTIDADE</th>
               )}
-              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.target}</th>
-              {config.columns.price && (
-                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.price}</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">OBJETIVO (%)</th>
+              {'price' in assets[0] && (
+                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">COTAÇÃO</th>
               )}
-              {config.columns.total && (
-                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.total}</th>
+              {'total' in assets[0] && (
+                <th className="border border-gray-300 px-4 py-2 text-left font-semibold">TOTAL</th>
               )}
-              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
-                {config.columns.participation}
-              </th>
-              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">{config.columns.difference}</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">PARTICIP. (%)</th>
+              <th className="border border-gray-300 px-4 py-2 text-left font-semibold">DIFERENÇA</th>
             </tr>
           </thead>
           <tbody>
@@ -90,13 +87,13 @@ const AssetTable = <T extends Asset>({
             ))}
             <tr className="bg-gray-200 font-bold">
               <td className="border border-gray-300 px-4 py-2">TOTAL</td>
-              {config.columns.currentValue && (
+              {'currentValue' in assets[0] && (
                 <td className="border border-gray-300 px-4 py-2">{formatCurrency(totalValue)}</td>
               )}
-              {config.columns.quantity && <td className="border border-gray-300 px-4 py-2">-</td>}
+              {'quantity' in assets[0] && <td className="border border-gray-300 px-4 py-2">-</td>}
               <td className="border border-gray-300 px-4 py-2">{formatPercentage(totalTarget)}</td>
-              {config.columns.price && <td className="border border-gray-300 px-4 py-2">-</td>}
-              {config.columns.total && (
+              {'price' in assets[0] && <td className="border border-gray-300 px-4 py-2">-</td>}
+              {'total' in assets[0] && (
                 <td className="border border-gray-300 px-4 py-2">{formatCurrency(totalValue)}</td>
               )}
               <td className="border border-gray-300 px-4 py-2">-</td>

@@ -15,19 +15,9 @@ export interface AssetWithQuantity extends Asset {
   total: number;
 }
 
-export interface AssetTableConfig {
+export interface TableConfig {
   title: string;
   headerColor: string;
   rowColor: string;
   recommendationColor: string;
-  columns: {
-    asset: string;
-    currentValue?: string;
-    quantity?: string;
-    target: string;
-    price?: string;
-    total?: string;
-    participation: string;
-    difference: string;
-  };
 }

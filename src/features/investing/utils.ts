@@ -10,20 +10,11 @@ export const formatPercentage = (value: number): string => {
 };
 
 export const calculateParticipation = (value: number, totalValue: number): number => {
-  return Math.round((value / totalValue) * 100 * 100) / 100;
+  return totalValue > 0 ? Math.round((value / totalValue) * 100 * 100) / 100 : 0;
 };
 
-export const calculateDifference = (participation: number, objective: number): number => {
-  return (participation - objective) / 100;
-};
-
-export const validateAllocation = (assets: { target: number }[]): boolean => {
-  const totalTarget = assets.reduce((sum, asset) => sum + asset.target, 0);
-  return totalTarget <= 100;
-};
-
-export const getTotalTarget = (assets: { target: number }[]): number => {
-  return assets.reduce((sum, asset) => sum + asset.target, 0);
+export const calculateDifference = (participation: number, target: number): number => {
+  return participation - target;
 };
 
 export const getRecommendation = <T extends { difference: number; asset: string }>(assets: T[]): T => {
