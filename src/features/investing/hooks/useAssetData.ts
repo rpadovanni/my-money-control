@@ -1,18 +1,18 @@
 import { useMemo } from 'react';
 import { calculateParticipation, calculateDifference, getRecommendation } from '../utils';
-import type { AssetWithQuantity, AssetWithValue, TableConfig } from '../types';
+import type { Asset, TableConfig } from '../types';
 
-// Generic hook for asset data - applying DRY principle
-export const useAssetData = <T extends AssetWithQuantity | AssetWithValue>(
-  assets: Omit<T, 'participation' | 'difference' | 'total'>[],
+// Unified hook for all asset types - applying DRY principle
+export const useAssetData = (
+  assets: readonly Omit<Asset, 'participation' | 'difference' | 'total'>[],
   config: TableConfig,
 ) => {
-  const processedAssets = useMemo((): T[] => {
+  const processedAssets = useMemo((): Asset[] => {
     const totalValue = assets.reduce((sum, asset) => {
-      if ('quantity' in asset && 'price' in asset) {
+      if (asset.quantity && asset.price) {
         return sum + asset.quantity * asset.price;
       }
-      if ('currentValue' in asset) {
+      if (asset.currentValue) {
         return sum + asset.currentValue;
       }
       return sum;
@@ -20,9 +20,9 @@ export const useAssetData = <T extends AssetWithQuantity | AssetWithValue>(
 
     return assets.map((asset) => {
       let value: number;
-      if ('quantity' in asset && 'price' in asset) {
+      if (asset.quantity && asset.price) {
         value = asset.quantity * asset.price;
-      } else if ('currentValue' in asset) {
+      } else if (asset.currentValue) {
         value = asset.currentValue;
       } else {
         value = 0;
@@ -33,18 +33,18 @@ export const useAssetData = <T extends AssetWithQuantity | AssetWithValue>(
 
       return {
         ...asset,
-        ...('quantity' in asset && 'price' in asset ? { total: value } : {}),
+        ...(asset.quantity && asset.price ? { total: value } : {}),
         participation,
         difference,
-      } as T;
+      };
     });
   }, [assets]);
 
   const totalValue = processedAssets.reduce((sum, asset) => {
-    if ('total' in asset) {
+    if (asset.total) {
       return sum + asset.total;
     }
-    if ('currentValue' in asset) {
+    if (asset.currentValue) {
       return sum + asset.currentValue;
     }
     return sum;

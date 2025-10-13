@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { PORTFOLIO_DATA } from '../data';
 import { calculateParticipation, calculateDifference, getRecommendation } from '../utils';
-import type { AssetWithValue, TableConfig } from '../types';
+import type { Asset, TableConfig } from '../types';
 
 // Simplified hook - applying DRY and YAGNI principles
 export const usePortfolioData = () => {
@@ -9,7 +9,7 @@ export const usePortfolioData = () => {
     const stocksTotal = PORTFOLIO_DATA.stocks.reduce((sum, stock) => sum + stock.quantity * stock.price, 0);
     const fiisTotal = PORTFOLIO_DATA.fiis.reduce((sum, fii) => sum + fii.quantity * fii.price, 0);
     const fixedIncomesTotal = PORTFOLIO_DATA.fixedIncomes.reduce((sum, asset) => sum + asset.currentValue, 0);
-    const cashTotal = PORTFOLIO_DATA.cash.value;
+    const cashTotal = PORTFOLIO_DATA.cash;
     const totalPortfolio = stocksTotal + fiisTotal + fixedIncomesTotal + cashTotal;
 
     const stocksParticipation = calculateParticipation(stocksTotal, totalPortfolio);
@@ -43,7 +43,7 @@ export const usePortfolioData = () => {
     };
   }, []);
 
-  const assets: AssetWithValue[] = portfolioData.categories.map((category) => ({
+  const assets: Asset[] = portfolioData.categories.map((category) => ({
     asset: category.type,
     currentValue: category.value,
     target: category.type === 'RENDA FIXA' ? 55 : category.type === 'RENDA VARIÁVEL' ? 40 : 5,
@@ -53,9 +53,6 @@ export const usePortfolioData = () => {
 
   const config: TableConfig = {
     title: 'CARTEIRA IDEAL vs STATUS ATUAL',
-    headerColor: 'bg-blue-800',
-    rowColor: 'bg-gray-50',
-    recommendationColor: 'bg-green-600',
   };
 
   return {

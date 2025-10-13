@@ -1,4 +1,4 @@
-// Centralized data source - applying DRY principle
+// Simplified and optimized data structure - applying DRY and YAGNI principles
 export const PORTFOLIO_DATA = {
   stocks: [
     { asset: 'BBAS3', quantity: 70, target: 8, price: 20.61 },
@@ -35,5 +35,12 @@ export const PORTFOLIO_DATA = {
     { asset: 'AP - Previdência', currentValue: 0.0, target: 5 },
     { asset: 'AP - IPCA+ 2045', currentValue: 514.22, target: 5 },
   ],
-  cash: { value: 207.55 },
-};
+  cash: 207.55,
+} as const;
+
+// Asset section configurations - applying DRY principle
+export const ASSET_CONFIGS = {
+  stocks: { title: 'AÇÕES' },
+  fiis: { title: 'FIIs' },
+  fixedIncomes: { title: 'RENDA FIXA' },
+} as const;
