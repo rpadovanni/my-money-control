@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import CreditCard from './features/credit-card';
+import Expenses from './features/expenses';
 import './App.css';
 
 function App() {
@@ -10,6 +11,8 @@ function App() {
     switch (currentFeature) {
       case 'credit-card':
         return <CreditCard />;
+      case 'expenses':
+        return <Expenses />;
       default:
         return <CreditCard />;
     }
