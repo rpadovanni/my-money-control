@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
-import type { ChecklistItem } from './types';
+import type { ChecklistItemState } from './types';
 
-// Internal atoms
-export const checklistItemsAtom = atom<ChecklistItem[]>([]);
-
+// Internal atoms - NOT exported from index.ts
+// Stores completion state for checklist items by period
+export const checklistStatesAtom = atom<ChecklistItemState[]>([]);
