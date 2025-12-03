@@ -10,6 +10,7 @@ import Health from './features/health';
 import Budgets from './features/budgets';
 import SavingsGoals from './features/savings-goals';
 import Investments from './features/investments';
+import Metrics from './features/metrics';
 import Settings from './features/settings';
 import { ThemeProvider } from './features/settings/components/ThemeProvider';
 import './App.css';
@@ -39,6 +40,8 @@ function App() {
         return <SavingsGoals />;
       case 'investments':
         return <Investments />;
+      case 'metrics':
+        return <Metrics />;
       case 'settings':
         return <Settings />;
       default:
