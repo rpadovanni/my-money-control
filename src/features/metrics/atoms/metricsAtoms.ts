@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
 import type { BurnRate, SavingRate, ExpenseDistribution, DistributionItem } from '../types';
 import { expensesAtom, incomesAtom } from '../../features-new/transactions/selectors';
-import { purchasesAtom } from '../../credit-card/atoms';
-import { fixedCostsAtom } from '../../fixed-costs/atoms';
+import { totalCurrentMonthPurchasesAtom } from '../../features-new/credit-card/selectors';
+import { getMonthlyFixedCostsAtom } from '../../features-new/fixed-costs/selectors';
 
 // Helper to get current month data
 const getCurrentMonthData = () => {
@@ -15,8 +15,8 @@ const getCurrentMonthData = () => {
 // Total expenses for current month (including credit card and fixed costs)
 export const currentMonthTotalExpensesAtom = atom((get) => {
   const expenses = get(expensesAtom);
-  const purchases = get(purchasesAtom);
-  const fixedCosts = get(fixedCostsAtom);
+  const purchases = get(totalCurrentMonthPurchasesAtom);
+  const fixedCosts = get(getMonthlyFixedCostsAtom);
   const { monthStart, monthEnd } = getCurrentMonthData();
 
   // Direct expenses
@@ -26,18 +26,7 @@ export const currentMonthTotalExpensesAtom = atom((get) => {
   });
   const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
-  // Credit card purchases
-  const monthPurchases = purchases.filter((p) => {
-    const purchaseDate = new Date(p.date);
-    return purchaseDate >= monthStart && purchaseDate <= monthEnd;
-  });
-  const purchasesTotal = monthPurchases.reduce((acc, p) => acc + p.amount, 0);
-
-  // Fixed costs (active ones)
-  const activeFixedCosts = fixedCosts.filter((fc) => fc.active);
-  const fixedCostsTotal = activeFixedCosts.reduce((acc, fc) => acc + fc.amount, 0);
-
-  return expensesTotal + purchasesTotal + fixedCostsTotal;
+  return expensesTotal + purchases + fixedCosts;
 });
 
 // Total income for current month
@@ -100,7 +89,7 @@ export const savingRateAtom = atom((get): SavingRate => {
 // Expense distribution by category
 export const expenseDistributionByCategoryAtom = atom((get): DistributionItem[] => {
   const expenses = get(expensesAtom);
-  const purchases = get(purchasesAtom);
+  const purchases = get(totalCurrentMonthPurchasesAtom);
   const { monthStart, monthEnd } = getCurrentMonthData();
 
   const categoryMap = new Map<string, number>();
@@ -116,16 +105,11 @@ export const expenseDistributionByCategoryAtom = atom((get): DistributionItem[] 
       categoryMap.set(exp.category, current + exp.value);
     });
 
-  // Add credit card purchases
-  purchases
-    .filter((p) => {
-      const purchaseDate = new Date(p.date);
-      return purchaseDate >= monthStart && purchaseDate <= monthEnd;
-    })
-    .forEach((p) => {
-      const current = categoryMap.get(p.category) || 0;
-      categoryMap.set(p.category, current + p.amount);
-    });
+  // Add credit card purchases to shopping category
+  if (purchases > 0) {
+    const current = categoryMap.get('shopping') || 0;
+    categoryMap.set('shopping', current + purchases);
+  }
 
   const total = Array.from(categoryMap.values()).reduce((acc, val) => acc + val, 0);
 
@@ -141,7 +125,7 @@ export const expenseDistributionByCategoryAtom = atom((get): DistributionItem[] 
 // Expense distribution by payment method
 export const expenseDistributionByPaymentMethodAtom = atom((get): DistributionItem[] => {
   const expenses = get(expensesAtom);
-  const purchases = get(purchasesAtom);
+  const purchases = get(totalCurrentMonthPurchasesAtom);
   const { monthStart, monthEnd } = getCurrentMonthData();
 
   const methodMap = new Map<string, number>();
@@ -160,13 +144,8 @@ export const expenseDistributionByPaymentMethodAtom = atom((get): DistributionIt
     });
 
   // Add credit card purchases
-  const monthPurchases = purchases.filter((p) => {
-    const purchaseDate = new Date(p.date);
-    return purchaseDate >= monthStart && purchaseDate <= monthEnd;
-  });
-  const creditCardTotal = monthPurchases.reduce((acc, p) => acc + p.amount, 0);
-  if (creditCardTotal > 0) {
-    methodMap.set('credit-card', creditCardTotal);
+  if (purchases > 0) {
+    methodMap.set('credit-card', purchases);
   }
 
   const total = Array.from(methodMap.values()).reduce((acc, val) => acc + val, 0);

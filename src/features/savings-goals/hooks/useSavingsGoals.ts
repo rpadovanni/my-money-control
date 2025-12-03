@@ -15,7 +15,7 @@ import {
 import type { SavingsGoal, SavingsGoalFormData, GoalProgress } from '../types';
 import { sortGoalsByProgress, calculateTotalProgress } from '../utils';
 import { useTransactions } from '../../features-new/transactions/hooks';
-import { useBudgets } from '../../budgets/hooks';
+import { useBudgets } from '../../features-new/budget/hooks';
 
 export function useSavingsGoals() {
   const [savingsGoals, setSavingsGoals] = useAtom(savingsGoalsAtom);

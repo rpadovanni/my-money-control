@@ -1,6 +1,25 @@
 import type { CategoryBudget, BudgetStatus, BudgetSimulation, BudgetAlert } from './types';
-import type { ExpenseCategory } from '../expenses/types';
-import { EXPENSE_CATEGORIES } from '../expenses/types';
+import type { TransactionCategory } from '../../features-new/transactions/types';
+import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
+
+// Use expense categories from transactions
+type ExpenseCategory = Extract<
+  TransactionCategory,
+  'food' | 'transport' | 'entertainment' | 'health' | 'education' | 'shopping' | 'bills' | 'travel' | 'personal' | 'other'
+>;
+
+const EXPENSE_CATEGORIES: Record<ExpenseCategory, string> = {
+  food: TRANSACTION_CATEGORIES.food,
+  transport: TRANSACTION_CATEGORIES.transport,
+  entertainment: TRANSACTION_CATEGORIES.entertainment,
+  health: TRANSACTION_CATEGORIES.health,
+  education: TRANSACTION_CATEGORIES.education,
+  shopping: TRANSACTION_CATEGORIES.shopping,
+  bills: TRANSACTION_CATEGORIES.bills,
+  travel: TRANSACTION_CATEGORIES.travel,
+  personal: TRANSACTION_CATEGORIES.personal,
+  other: TRANSACTION_CATEGORIES.other,
+};
 
 export function formatCurrency(value: number): string {
   return new Intl.NumberFormat('pt-BR', {

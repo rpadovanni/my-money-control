@@ -3,8 +3,7 @@ import { categoryBudgetsAtom, currentMonthBudgetsAtom, totalBudgetLimitAtom } fr
 import type { CategoryBudget, CategoryBudgetFormData, BudgetSimulation, BudgetAlert, ExpenseCategory } from '../types';
 import { calculateBudgetSimulation, generateBudgetAlerts, getCurrentMonth } from '../utils';
 import { useTransactions } from '../../features-new/transactions/hooks';
-import { useFixedCosts } from '../../fixed-costs/hooks';
-import { useHealth } from '../../health/hooks';
+import { useFixedCosts } from '../../features-new/fixed-costs/hooks';
 
 export function useBudgets() {
   const [categoryBudgets, setCategoryBudgets] = useAtom(categoryBudgetsAtom);
@@ -13,8 +12,7 @@ export function useBudgets() {
   
   // Get spending from all features
   const { expensesByCategory } = useTransactions();
-  const { totalFixedCosts } = useFixedCosts();
-  const { totalRecurringExpenses, currentMonthConsultationsTotal, currentMonthMedicationsTotal } = useHealth();
+  const { monthlyFixedCosts } = useFixedCosts();
 
   const { month, year } = getCurrentMonth();
 
@@ -24,10 +22,10 @@ export function useBudgets() {
       food: (expensesByCategory['food'] as number) || 0,
       transport: (expensesByCategory['transport'] as number) || 0,
       entertainment: (expensesByCategory['entertainment'] as number) || 0,
-      health: ((expensesByCategory['health'] as number) || 0) + totalRecurringExpenses + currentMonthConsultationsTotal + currentMonthMedicationsTotal,
+      health: (expensesByCategory['health'] as number) || 0,
       education: (expensesByCategory['education'] as number) || 0,
       shopping: (expensesByCategory['shopping'] as number) || 0,
-      bills: ((expensesByCategory['bills'] as number) || 0) + totalFixedCosts,
+      bills: ((expensesByCategory['bills'] as number) || 0) + monthlyFixedCosts,
       travel: (expensesByCategory['travel'] as number) || 0,
       personal: (expensesByCategory['personal'] as number) || 0,
       other: (expensesByCategory['other'] as number) || 0,
