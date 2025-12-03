@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import { categoryBudgetsAtom } from './atoms';
 import { expensesByCategoryAtom } from '../transactions/selectors';
 import { getMonthlyFixedCostsAtom } from '../fixed-costs/selectors';
-import { totalCurrentMonthPurchasesAtom } from '../credit-card/selectors';
+import { currentMonthPurchasesAtom } from '../credit-card/selectors';
 import type { BudgetStatus, BudgetSummary, BudgetWarning, BudgetCategory } from './types';
 import { TRANSACTION_CATEGORIES } from '../transactions/types';
 
@@ -25,16 +25,17 @@ export const totalBudgetLimitAtom = atom((get) => {
 // Total spending by category (from transactions, credit-card, fixed-costs)
 export const totalSpendingByCategoryAtom = atom((get) => {
   const expensesByCategory = get(expensesByCategoryAtom);
-  const totalPurchases = get(totalCurrentMonthPurchasesAtom);
+  const purchases = get(currentMonthPurchasesAtom); // Get array to distribute by category
   const fixedCosts = get(getMonthlyFixedCostsAtom);
 
   // Combine all sources
   const spending: Record<string, number> = { ...expensesByCategory };
   
-  // Add credit card purchases to shopping category
-  if (totalPurchases > 0) {
-    spending['shopping'] = (spending['shopping'] || 0) + totalPurchases;
-  }
+  // Distribute credit card purchases by their actual category
+  purchases.forEach((purchase) => {
+    const category = purchase.category;
+    spending[category] = (spending[category] || 0) + purchase.amount;
+  });
   
   // Add fixed costs to bills category
   if (fixedCosts > 0) {

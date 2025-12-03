@@ -44,9 +44,11 @@ export function useCreditCardIntegration() {
     transactionsToSync.forEach((transaction) => {
       if (!transaction.creditCardId) return;
 
-      // Check if already exists (double-check)
-      if (purchases.some((p) => p.transactionId === transaction.id)) {
-        return;
+      // Double-check: Verify purchase doesn't already exist
+      // This prevents race conditions when PurchaseForm creates both transaction and purchase
+      const existingPurchase = purchases.find((p) => p.transactionId === transaction.id);
+      if (existingPurchase) {
+        return; // Purchase already exists, skip
       }
 
       const purchaseData = transactionToPurchase(transaction, transaction.creditCardId);
@@ -61,7 +63,12 @@ export function useCreditCardIntegration() {
     });
 
     if (newPurchases.length > 0) {
-      setPurchases((prev) => [...prev, ...newPurchases]);
+      setPurchases((prev) => {
+        // Final check before adding to prevent duplicates
+        const existingIds = new Set(prev.map((p) => p.transactionId));
+        const uniquePurchases = newPurchases.filter((p) => !existingIds.has(p.transactionId));
+        return [...prev, ...uniquePurchases];
+      });
     }
   }, [transactionsToSync, purchases, setPurchases]);
 }
