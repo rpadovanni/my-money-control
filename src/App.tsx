@@ -4,6 +4,7 @@ import Dashboard from './features/dashboard';
 import CreditCard from './features/credit-card';
 import Expenses from './features/expenses';
 import Checklist from './features/checklist';
+import Income from './features/income';
 import './App.css';
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         return <Expenses />;
       case 'checklist':
         return <Checklist />;
+      case 'income':
+        return <Income />;
       default:
         return <Dashboard />;
     }
