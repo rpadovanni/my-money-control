@@ -1,4 +1,4 @@
-import { CreditCard as CreditCardIcon, Wallet } from 'lucide-react';
+import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -8,6 +8,11 @@ interface NavbarProps {
 }
 
 const features = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+  },
   {
     id: 'credit-card',
     label: 'Cartão de Crédito',
