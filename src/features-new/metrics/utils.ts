@@ -1,15 +1,3 @@
-export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(value);
-}
+import { formatCurrency, formatDate, formatPercent } from '@/shared/utils';
 
-export function formatPercent(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'percent',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value / 100);
-}
-
+export { formatCurrency, formatDate, formatPercent };

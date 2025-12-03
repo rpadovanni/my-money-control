@@ -7,8 +7,8 @@ export interface BurnRate {
 }
 
 export interface SavingRate {
-  rate: number;
-  amount: number;
+  rate: number; // percentage
+  amount: number; // savings amount
   income: number;
   expenses: number;
 }
@@ -18,4 +18,3 @@ export interface DistributionItem {
   amount: number;
   percentage: number;
 }
-
