@@ -6,6 +6,7 @@ import Expenses from './features/expenses';
 import Checklist from './features/checklist';
 import Income from './features/income';
 import FixedCosts from './features/fixed-costs';
+import Health from './features/health';
 import './App.css';
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
         return <Income />;
       case 'fixed-costs':
         return <FixedCosts />;
+      case 'health':
+        return <Health />;
       default:
         return <Dashboard />;
     }
