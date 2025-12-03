@@ -8,6 +8,7 @@ import Income from './features/income';
 import FixedCosts from './features/fixed-costs';
 import Health from './features/health';
 import Budgets from './features/budgets';
+import SavingsGoals from './features/savings-goals';
 import './App.css';
 
 function App() {
@@ -31,13 +32,12 @@ function App() {
         return <Health />;
       case 'budgets':
         return <Budgets />;
+      case 'savings-goals':
+        return <SavingsGoals />;
       default:
         return <Dashboard />;
     }
   };
-
-  // Debug: log current feature
-  console.log('Current feature:', currentFeature);
 
   return (
     <div className="min-h-screen bg-background">
