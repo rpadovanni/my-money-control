@@ -1,10 +1,17 @@
-// Public API
+// Public API - only hooks and components are exposed
 export { default } from './Budget';
 export { useBudget } from './hooks';
 export * from './types';
-export * from './components/CategoryBudgetForm';
+export * from './components/BudgetForm';
 export * from './components/BudgetSummary';
+export * from './components/BudgetWarnings';
 
-// Selectors
-export { currentMonthBudgetsAtom, totalBudgetLimitAtom, totalSpendingByCategoryAtom } from './selectors';
-
+// Selectors for other features to consume
+export {
+  currentMonthBudgetsAtom,
+  totalBudgetLimitAtom,
+  totalSpendingByCategoryAtom,
+  getBudgetForCategoryAtom,
+  getBudgetSummaryAtom,
+  getBudgetWarningsAtom,
+} from './selectors';
