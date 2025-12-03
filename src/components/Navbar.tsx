@@ -1,4 +1,4 @@
-import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard, CheckSquare, TrendingUp, Home, Heart, Target, Flag, Settings as SettingsIcon } from 'lucide-react';
+import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard, CheckSquare, TrendingUp, Home, Heart, Target, Flag, Settings as SettingsIcon, LineChart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -47,6 +47,11 @@ const features = [
     id: 'savings-goals',
     label: 'Metas',
     icon: Flag,
+  },
+  {
+    id: 'investments',
+    label: 'Investimentos',
+    icon: LineChart,
   },
   {
     id: 'checklist',
