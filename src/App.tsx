@@ -7,6 +7,7 @@ import Checklist from './features/checklist';
 import Income from './features/income';
 import FixedCosts from './features/fixed-costs';
 import Health from './features/health';
+import Budgets from './features/budgets';
 import './App.css';
 
 function App() {
@@ -28,10 +29,15 @@ function App() {
         return <FixedCosts />;
       case 'health':
         return <Health />;
+      case 'budgets':
+        return <Budgets />;
       default:
         return <Dashboard />;
     }
   };
+
+  // Debug: log current feature
+  console.log('Current feature:', currentFeature);
 
   return (
     <div className="min-h-screen bg-background">
