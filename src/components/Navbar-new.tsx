@@ -1,0 +1,87 @@
+import { LayoutDashboard, ArrowRightLeft, CreditCard, Home, Target, BarChart3, CheckSquare, Settings as SettingsIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+interface NavbarProps {
+  currentFeature?: string;
+  onFeatureChange?: (feature: string) => void;
+}
+
+const features = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    id: 'transactions',
+    label: 'Transações',
+    icon: ArrowRightLeft,
+  },
+  {
+    id: 'credit-card',
+    label: 'Cartão',
+    icon: CreditCard,
+  },
+  {
+    id: 'fixed-costs',
+    label: 'Custos Fixos',
+    icon: Home,
+  },
+  {
+    id: 'budget',
+    label: 'Orçamento',
+    icon: Target,
+  },
+  {
+    id: 'metrics',
+    label: 'Métricas',
+    icon: BarChart3,
+  },
+  {
+    id: 'checklist',
+    label: 'Checklist',
+    icon: CheckSquare,
+  },
+  {
+    id: 'settings',
+    label: 'Configurações',
+    icon: SettingsIcon,
+  },
+];
+
+export function Navbar({ currentFeature, onFeatureChange }: NavbarProps) {
+  return (
+    <nav className="border-b bg-background">
+      <div className="container mx-auto px-6">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold">My Money Control</h1>
+            <span className="text-xs text-muted-foreground">(Nova Arquitetura)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              const isActive = currentFeature === feature.id;
+              return (
+                <Button
+                  key={feature.id}
+                  variant={isActive ? 'default' : 'ghost'}
+                  onClick={() => onFeatureChange?.(feature.id)}
+                  className={cn(
+                    'flex items-center gap-2',
+                    isActive && 'bg-primary text-primary-foreground'
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {feature.label}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
