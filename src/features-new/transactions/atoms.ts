@@ -1,6 +1,6 @@
-import { atom } from 'jotai';
 import type { Transaction, TransactionFilters } from './types';
+import { persistentAtom } from '../../shared/lib/persistentAtom';
 
 // Internal atoms - NOT exported from index.ts
-export const transactionsAtom = atom<Transaction[]>([]);
-export const transactionFiltersAtom = atom<TransactionFilters>({});
+export const transactionsAtom = persistentAtom<Transaction[]>('transactions', []);
+export const transactionFiltersAtom = persistentAtom<TransactionFilters>('transaction-filters', {});

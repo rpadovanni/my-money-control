@@ -1,10 +1,8 @@
-import { atom } from 'jotai';
-import type { Settings, Theme } from './types';
+import type { Settings } from './types';
+import { persistentAtom } from '../../shared/lib/persistentAtom';
 
 // Internal atoms
-export const settingsAtom = atom<Settings>({
+export const settingsAtom = persistentAtom<Settings>('settings', {
   theme: 'system',
   customCategories: [],
 });
-
-// Theme atom moved to selectors.ts
