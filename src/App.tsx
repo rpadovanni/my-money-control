@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import Dashboard from './features/dashboard';
 import CreditCard from './features/credit-card';
 import Expenses from './features/expenses';
+import Checklist from './features/checklist';
 import './App.css';
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
         return <CreditCard />;
       case 'expenses':
         return <Expenses />;
+      case 'checklist':
+        return <Checklist />;
       default:
         return <Dashboard />;
     }
