@@ -1,4 +1,4 @@
-import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard, CheckSquare, TrendingUp } from 'lucide-react';
+import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard, CheckSquare, TrendingUp, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -27,6 +27,11 @@ const features = [
     id: 'income',
     label: 'Receitas',
     icon: TrendingUp,
+  },
+  {
+    id: 'fixed-costs',
+    label: 'Custos Fixos',
+    icon: Home,
   },
   {
     id: 'checklist',

@@ -5,6 +5,7 @@ import CreditCard from './features/credit-card';
 import Expenses from './features/expenses';
 import Checklist from './features/checklist';
 import Income from './features/income';
+import FixedCosts from './features/fixed-costs';
 import './App.css';
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
         return <Checklist />;
       case 'income':
         return <Income />;
+      case 'fixed-costs':
+        return <FixedCosts />;
       default:
         return <Dashboard />;
     }
