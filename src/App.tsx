@@ -9,6 +9,8 @@ import FixedCosts from './features/fixed-costs';
 import Health from './features/health';
 import Budgets from './features/budgets';
 import SavingsGoals from './features/savings-goals';
+import Settings from './features/settings';
+import { ThemeProvider } from './features/settings/components/ThemeProvider';
 import './App.css';
 
 function App() {
@@ -34,16 +36,20 @@ function App() {
         return <Budgets />;
       case 'savings-goals':
         return <SavingsGoals />;
+      case 'settings':
+        return <Settings />;
       default:
         return <Dashboard />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar currentFeature={currentFeature} onFeatureChange={setCurrentFeature} />
-      <main>{renderFeature()}</main>
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-background">
+        <Navbar currentFeature={currentFeature} onFeatureChange={setCurrentFeature} />
+        <main>{renderFeature()}</main>
+      </div>
+    </ThemeProvider>
   );
 }
 
