@@ -40,6 +40,10 @@ export function useTransactions() {
       ...data,
     };
     setTransactions((prev) => [...prev, newTransaction]);
+    
+    // Note: Integration with credit-card is handled by useCreditCardIntegration hook
+    // This ensures credit-card doesn't import atoms directly from transactions
+    
     return newTransaction;
   };
 

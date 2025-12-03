@@ -1,6 +1,7 @@
 // Public API - only hooks and components are exposed
 export { default } from './CreditCard';
 export { useCreditCards, usePurchases, useInvoices, useBudget } from './hooks';
+export { useCreditCardIntegration } from './integration';
 export * from './types';
 export * from './components/CardForm';
 export * from './components/PurchaseForm';
@@ -17,5 +18,7 @@ export {
   currentInvoicesAtom,
   currentMonthPurchasesAtom,
   totalCurrentMonthPurchasesAtom,
+  getMonthlyInvoiceAtom,
+  getCardBudgetProgressAtom,
+  getTotalCreditCardExpensesAtom,
 } from './selectors';
-
