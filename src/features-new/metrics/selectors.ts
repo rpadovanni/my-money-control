@@ -5,14 +5,14 @@ import {
   expensesByCategoryAtom,
 } from '../transactions';
 import { totalCurrentMonthPurchasesAtom } from '../credit-card';
-import { totalFixedCostsAtom } from '../fixed-costs';
+import { getMonthlyFixedCostsAtom } from '../fixed-costs';
 import type { BurnRate, SavingRate, DistributionItem } from './types';
 
 // Total current month expenses (transactions + credit-card + fixed-costs)
 export const totalMonthlyExpensesAtom = atom((get) => {
   const expenses = get(currentMonthExpensesTotalAtom);
   const purchases = get(totalCurrentMonthPurchasesAtom);
-  const fixedCosts = get(totalFixedCostsAtom);
+  const fixedCosts = get(getMonthlyFixedCostsAtom); // Use monthly equivalent
 
   return expenses + purchases + fixedCosts;
 });

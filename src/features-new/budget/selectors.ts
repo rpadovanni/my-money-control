@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { categoryBudgetsAtom } from './atoms';
 import { expensesByCategoryAtom } from '../transactions';
-import { totalFixedCostsAtom } from '../fixed-costs';
+import { getMonthlyFixedCostsAtom } from '../fixed-costs';
 import { totalCurrentMonthPurchasesAtom } from '../credit-card';
 
 // Current month budgets
@@ -24,7 +24,7 @@ export const totalBudgetLimitAtom = atom((get) => {
 export const totalSpendingByCategoryAtom = atom((get) => {
   const expensesByCategory = get(expensesByCategoryAtom);
   const totalPurchases = get(totalCurrentMonthPurchasesAtom);
-  const fixedCosts = get(totalFixedCostsAtom);
+  const fixedCosts = get(getMonthlyFixedCostsAtom); // Use monthly equivalent
 
   // Combine all sources
   const spending: Record<string, number> = { ...expensesByCategory };

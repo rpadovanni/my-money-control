@@ -5,7 +5,7 @@ import {
   expensesByMonthAtom,
 } from '../transactions';
 import { totalCurrentMonthPurchasesAtom } from '../credit-card';
-import { totalFixedCostsAtom } from '../fixed-costs';
+import { getMonthlyFixedCostsAtom } from '../fixed-costs';
 import { savingRateAtom } from '../metrics';
 import type { DashboardSummary } from './types';
 
@@ -14,7 +14,7 @@ export const dashboardSummaryAtom = atom((get): DashboardSummary => {
   const totalIncome = get(currentMonthIncomesTotalAtom);
   const transactionsExpenses = get(currentMonthExpensesTotalAtom);
   const creditCardPurchases = get(totalCurrentMonthPurchasesAtom);
-  const fixedCosts = get(totalFixedCostsAtom);
+  const fixedCosts = get(getMonthlyFixedCostsAtom); // Use monthly equivalent
   const savingRate = get(savingRateAtom);
 
   const totalExpenses = transactionsExpenses + creditCardPurchases + fixedCosts;
