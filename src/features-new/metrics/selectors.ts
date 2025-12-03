@@ -1,23 +1,25 @@
 import { atom } from 'jotai';
-import { currentMonthExpensesAtom, currentMonthIncomesAtom, expensesByCategoryAtom } from '../transactions';
+import {
+  currentMonthExpensesTotalAtom,
+  currentMonthIncomesTotalAtom,
+  expensesByCategoryAtom,
+} from '../transactions';
 import { totalCurrentMonthPurchasesAtom } from '../credit-card';
 import { totalFixedCostsAtom } from '../fixed-costs';
 import type { BurnRate, SavingRate, DistributionItem } from './types';
 
 // Total current month expenses (transactions + credit-card + fixed-costs)
 export const totalMonthlyExpensesAtom = atom((get) => {
-  const expenses = get(currentMonthExpensesAtom);
+  const expenses = get(currentMonthExpensesTotalAtom);
   const purchases = get(totalCurrentMonthPurchasesAtom);
   const fixedCosts = get(totalFixedCostsAtom);
 
-  const expensesTotal = expenses.reduce((acc, exp) => acc + exp.amount, 0);
-  return expensesTotal + purchases + fixedCosts;
+  return expenses + purchases + fixedCosts;
 });
 
 // Total current month income
 export const totalMonthlyIncomesAtom = atom((get) => {
-  const incomes = get(currentMonthIncomesAtom);
-  return incomes.reduce((acc, inc) => acc + inc.amount, 0);
+  return get(currentMonthIncomesTotalAtom);
 });
 
 // Burn Rate
@@ -65,4 +67,3 @@ export const expenseDistributionAtom = atom((get): DistributionItem[] => {
     }))
     .sort((a, b) => b.amount - a.amount);
 });
-

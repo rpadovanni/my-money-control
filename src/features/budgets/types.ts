@@ -1,9 +1,10 @@
 // Types for budgets feature
 
-import type { ExpenseCategory } from '../expenses/types';
+import type { TransactionCategory } from '../../features-new/transactions/types';
+import { EXPENSE_CATEGORIES } from '../../features-new/transactions/types';
 
-// Re-export ExpenseCategory for convenience
-export type { ExpenseCategory };
+// Use expense categories only for budgets
+export type ExpenseCategory = TransactionCategory;
 
 export interface CategoryBudget {
   id: string;

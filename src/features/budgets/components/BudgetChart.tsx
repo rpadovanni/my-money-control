@@ -5,7 +5,7 @@ import {
 } from '@/components/ui/chart';
 import { useBudgets } from '../hooks';
 import { formatCurrency } from '../utils';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Cell } from 'recharts';
 
 const chartConfig = {
@@ -30,7 +30,7 @@ export function BudgetChart() {
   const simulation = getBudgetSimulation();
 
   const chartData = simulation.categories.map((status) => ({
-    category: EXPENSE_CATEGORIES[status.category],
+    category: TRANSACTION_CATEGORIES[status.category as keyof typeof TRANSACTION_CATEGORIES] || status.category,
     limit: status.limit,
     spent: status.spent,
     remaining: status.remaining,

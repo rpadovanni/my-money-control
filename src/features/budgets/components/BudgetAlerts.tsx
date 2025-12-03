@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useBudgets } from '../hooks';
 import { formatCurrency } from '../utils';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
 import { AlertTriangle, XCircle, CheckCircle2 } from 'lucide-react';
 
 export function BudgetAlerts() {
@@ -50,7 +50,7 @@ export function BudgetAlerts() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <Badge variant="destructive">
-                    {EXPENSE_CATEGORIES[alert.category]}
+                    {TRANSACTION_CATEGORIES[alert.category as keyof typeof TRANSACTION_CATEGORIES] || alert.category}
                   </Badge>
                   <span className="text-sm font-semibold text-destructive">Orçamento Excedido</span>
                 </div>
@@ -72,7 +72,7 @@ export function BudgetAlerts() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <Badge variant="outline" className="border-orange-500 text-orange-700">
-                    {EXPENSE_CATEGORIES[alert.category]}
+                    {TRANSACTION_CATEGORIES[alert.category as keyof typeof TRANSACTION_CATEGORIES] || alert.category}
                   </Badge>
                   <span className="text-sm font-semibold text-orange-800">Atenção</span>
                 </div>

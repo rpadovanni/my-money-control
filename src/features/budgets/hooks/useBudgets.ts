@@ -2,7 +2,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { categoryBudgetsAtom, currentMonthBudgetsAtom, totalBudgetLimitAtom } from '../atoms';
 import type { CategoryBudget, CategoryBudgetFormData, BudgetSimulation, BudgetAlert, ExpenseCategory } from '../types';
 import { calculateBudgetSimulation, generateBudgetAlerts, getCurrentMonth } from '../utils';
-import { useExpenses } from '../../expenses/hooks';
+import { useTransactions } from '../../features-new/transactions/hooks';
 import { useFixedCosts } from '../../fixed-costs/hooks';
 import { useHealth } from '../../health/hooks';
 
@@ -12,7 +12,7 @@ export function useBudgets() {
   const totalBudgetLimit = useAtomValue(totalBudgetLimitAtom);
   
   // Get spending from all features
-  const { expensesByCategory } = useExpenses();
+  const { expensesByCategory } = useTransactions();
   const { totalFixedCosts } = useFixedCosts();
   const { totalRecurringExpenses, currentMonthConsultationsTotal, currentMonthMedicationsTotal } = useHealth();
 

@@ -14,7 +14,7 @@ import { formatCurrency, formatMonthYear } from '../utils';
 import { CategoryBudgetForm } from './CategoryBudgetForm';
 import { useState } from 'react';
 import type { CategoryBudget } from '../types';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
 import { Trash2, Edit, Plus } from 'lucide-react';
 
 export function BudgetsTable() {
@@ -61,7 +61,7 @@ export function BudgetsTable() {
                 <TableRow key={budget.id}>
                   <TableCell>
                     <Badge variant="secondary">
-                      {EXPENSE_CATEGORIES[budget.category]}
+                      {TRANSACTION_CATEGORIES[budget.category as keyof typeof TRANSACTION_CATEGORIES] || budget.category}
                     </Badge>
                   </TableCell>
                   <TableCell className="font-medium">{formatCurrency(budget.limit)}</TableCell>

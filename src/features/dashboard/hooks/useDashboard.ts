@@ -9,16 +9,16 @@ import {
   topCategoriesAtom,
   currentWeekSpendingAtom,
 } from '../atoms';
-import { useExpenses } from '../../expenses/hooks';
+import { useTransactions } from '../../features-new/transactions/hooks';
 import { usePurchases, useInvoices, useBudget } from '../../credit-card/hooks';
 import { getWeeksOfMonth, calculateMonthForecast, getLastMonths, calculatePercentage } from '../utils';
 import { useMemo } from 'react';
 import type { MonthlySpending, CategorySummary, WeeklySpending, MonthForecast, DashboardSummary } from '../types';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
 import { PURCHASE_CATEGORIES } from '../../credit-card/types';
 
 export function useDashboard() {
-  const { allExpenses } = useExpenses();
+  const { expenses: allExpenses } = useTransactions();
   const { purchases } = usePurchases();
   const { currentInvoices } = useInvoices();
   const { currentBudget } = useBudget();
@@ -46,7 +46,7 @@ export function useDashboard() {
         const expDate = new Date(exp.date);
         return expDate >= monthStart && expDate <= monthEnd;
       });
-      const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.amount, 0);
+      const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
       // Credit card purchases in this month
       const monthPurchases = purchases.filter((p) => {
@@ -85,9 +85,9 @@ export function useDashboard() {
         return expDate >= monthStart && expDate <= monthEnd;
       })
       .forEach((exp) => {
-        const categoryName = EXPENSE_CATEGORIES[exp.category] || exp.category;
+        const categoryName = TRANSACTION_CATEGORIES[exp.category as keyof typeof TRANSACTION_CATEGORIES] || exp.category;
         const current = categoryMap.get(categoryName) || 0;
-        categoryMap.set(categoryName, current + exp.amount);
+        categoryMap.set(categoryName, current + exp.value);
       });
 
     // Add credit card purchases
@@ -125,7 +125,7 @@ export function useDashboard() {
         const expDate = new Date(exp.date);
         return expDate >= week.startDate && expDate <= week.endDate;
       });
-      const expensesTotal = weekExpenses.reduce((acc, exp) => acc + exp.amount, 0);
+      const expensesTotal = weekExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
       const weekPurchases = purchases.filter((p) => {
         const purchaseDate = new Date(p.date);

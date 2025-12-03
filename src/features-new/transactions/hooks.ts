@@ -9,6 +9,11 @@ import {
   expensesByCategoryAtom,
   currentMonthExpensesAtom,
   currentMonthIncomesAtom,
+  currentMonthExpensesTotalAtom,
+  currentMonthIncomesTotalAtom,
+  expensesByPaymentMethodAtom,
+  expensesByMonthAtom,
+  incomesByCategoryAtom,
 } from './selectors';
 import type { Transaction, TransactionFormData, TransactionFilters } from './types';
 
@@ -23,6 +28,11 @@ export function useTransactions() {
   const expensesByCategory = useAtomValue(expensesByCategoryAtom);
   const currentMonthExpenses = useAtomValue(currentMonthExpensesAtom);
   const currentMonthIncomes = useAtomValue(currentMonthIncomesAtom);
+  const currentMonthExpensesTotal = useAtomValue(currentMonthExpensesTotalAtom);
+  const currentMonthIncomesTotal = useAtomValue(currentMonthIncomesTotalAtom);
+  const expensesByPaymentMethod = useAtomValue(expensesByPaymentMethodAtom);
+  const expensesByMonth = useAtomValue(expensesByMonthAtom);
+  const incomesByCategory = useAtomValue(incomesByCategoryAtom);
 
   const addTransaction = (data: TransactionFormData) => {
     const newTransaction: Transaction = {
@@ -33,7 +43,7 @@ export function useTransactions() {
     return newTransaction;
   };
 
-  const updateTransaction = (id: string, data: Partial<Transaction>) => {
+  const updateTransaction = (id: string, data: Partial<TransactionFormData>) => {
     setTransactions((prev) =>
       prev.map((transaction) =>
         transaction.id === id ? { ...transaction, ...data } : transaction
@@ -54,16 +64,32 @@ export function useTransactions() {
   };
 
   return {
+    // Data
     transactions: filteredTransactions,
     allTransactions: transactions,
     expenses,
     incomes,
+    
+    // Totals
     totalExpenses,
     totalIncomes,
-    expensesByCategory,
+    currentMonthExpensesTotal,
+    currentMonthIncomesTotal,
+    
+    // Current month
     currentMonthExpenses,
     currentMonthIncomes,
+    
+    // Aggregations
+    expensesByCategory,
+    expensesByPaymentMethod,
+    expensesByMonth,
+    incomesByCategory,
+    
+    // Filters
     filters,
+    
+    // Actions
     addTransaction,
     updateTransaction,
     deleteTransaction,
@@ -71,4 +97,3 @@ export function useTransactions() {
     clearFilters,
   };
 }
-

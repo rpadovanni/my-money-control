@@ -10,9 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useMetrics } from '../hooks';
 import { formatCurrency, formatPercent } from '../utils';
 import { PieChart, Pie, Cell, BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES, PAYMENT_METHODS } from '../../features-new/transactions/types';
 import { PURCHASE_CATEGORIES } from '../../credit-card/types';
-import { PAYMENT_METHODS } from '../../expenses/types';
 
 const CHART_COLORS = [
   'hsl(var(--chart-1))',
@@ -34,10 +33,10 @@ export function DistributionChart() {
 
   // Prepare data for category pie chart
   const categoryChartData = expenseDistribution.byCategory.map((item, index) => {
-    // Try to get label from EXPENSE_CATEGORIES or PURCHASE_CATEGORIES
+    // Try to get label from TRANSACTION_CATEGORIES or PURCHASE_CATEGORIES
     let label = item.category;
-    if (EXPENSE_CATEGORIES[item.category as keyof typeof EXPENSE_CATEGORIES]) {
-      label = EXPENSE_CATEGORIES[item.category as keyof typeof EXPENSE_CATEGORIES];
+    if (TRANSACTION_CATEGORIES[item.category as keyof typeof TRANSACTION_CATEGORIES]) {
+      label = TRANSACTION_CATEGORIES[item.category as keyof typeof TRANSACTION_CATEGORIES];
     } else if (PURCHASE_CATEGORIES[item.category as keyof typeof PURCHASE_CATEGORIES]) {
       label = PURCHASE_CATEGORIES[item.category as keyof typeof PURCHASE_CATEGORIES];
     }

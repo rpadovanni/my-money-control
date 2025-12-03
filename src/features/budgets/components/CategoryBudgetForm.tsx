@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { CategoryBudget, CategoryBudgetFormData, ExpenseCategory } from '../types';
-import { EXPENSE_CATEGORIES } from '../../expenses/types';
+import { TRANSACTION_CATEGORIES, EXPENSE_CATEGORIES } from '../../features-new/transactions/types';
 import { useBudgets } from '../hooks';
 import { formatCurrencyWhileTyping, getCurrentMonth } from '../utils';
 
@@ -53,7 +53,9 @@ export function CategoryBudgetForm({ open, onOpenChange, budget }: CategoryBudge
     onOpenChange(false);
   };
 
-  const categories = Object.entries(EXPENSE_CATEGORIES) as [ExpenseCategory, string][];
+  // Filter only expense categories (not income categories)
+  const expenseCategories = EXPENSE_CATEGORIES.map(cat => [cat, TRANSACTION_CATEGORIES[cat]] as [ExpenseCategory, string]);
+  const categories = expenseCategories;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

@@ -29,7 +29,7 @@ export const totalSpendingByCategoryAtom = atom((get) => {
   // Combine all sources
   const spending: Record<string, number> = { ...expensesByCategory };
   
-  // Add credit card purchases to general category
+  // Add credit card purchases to shopping category
   if (totalPurchases > 0) {
     spending['shopping'] = (spending['shopping'] || 0) + totalPurchases;
   }
@@ -41,4 +41,3 @@ export const totalSpendingByCategoryAtom = atom((get) => {
 
   return spending;
 });
-

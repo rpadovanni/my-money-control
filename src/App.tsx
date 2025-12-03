@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import { Navbar } from './components/Navbar';
-import Dashboard from './features/dashboard';
-import CreditCard from './features/credit-card';
-import Expenses from './features/expenses';
-import Checklist from './features/checklist';
-import Income from './features/income';
-import FixedCosts from './features/fixed-costs';
-import Health from './features/health';
-import Budgets from './features/budgets';
-import SavingsGoals from './features/savings-goals';
+import Dashboard from './features-new/dashboard';
+import Transactions from './features-new/transactions';
+import CreditCard from './features-new/credit-card';
+import FixedCosts from './features-new/fixed-costs';
+import Budget from './features-new/budget';
+import Metrics from './features-new/metrics';
+import Checklist from './features-new/checklist';
+import Settings from './features-new/settings';
 import Investments from './features/investments';
-import Metrics from './features/metrics';
-import Settings from './features/settings';
-import { ThemeProvider } from './features/settings/components/ThemeProvider';
+import { ThemeProvider } from './features-new/settings/components/ThemeProvider';
 import './App.css';
 
 function App() {
@@ -22,28 +19,22 @@ function App() {
     switch (currentFeature) {
       case 'dashboard':
         return <Dashboard />;
+      case 'transactions':
+        return <Transactions />;
       case 'credit-card':
         return <CreditCard />;
-      case 'expenses':
-        return <Expenses />;
-      case 'checklist':
-        return <Checklist />;
-      case 'income':
-        return <Income />;
       case 'fixed-costs':
         return <FixedCosts />;
-      case 'health':
-        return <Health />;
-      case 'budgets':
-        return <Budgets />;
-      case 'savings-goals':
-        return <SavingsGoals />;
-      case 'investments':
-        return <Investments />;
+      case 'budget':
+        return <Budget />;
       case 'metrics':
         return <Metrics />;
+      case 'checklist':
+        return <Checklist />;
       case 'settings':
         return <Settings />;
+      case 'investments':
+        return <Investments />;
       default:
         return <Dashboard />;
     }

@@ -16,5 +16,9 @@ export {
   expensesByCategoryAtom,
   currentMonthExpensesAtom,
   currentMonthIncomesAtom,
+  currentMonthExpensesTotalAtom,
+  currentMonthIncomesTotalAtom,
+  expensesByPaymentMethodAtom,
+  expensesByMonthAtom,
+  incomesByCategoryAtom,
 } from './selectors';
-

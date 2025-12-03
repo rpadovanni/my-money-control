@@ -1,7 +1,6 @@
 import { atom } from 'jotai';
 import type { BurnRate, SavingRate, ExpenseDistribution, DistributionItem } from '../types';
-import { expensesAtom } from '../../expenses/atoms';
-import { incomesAtom } from '../../income/atoms';
+import { expensesAtom, incomesAtom } from '../../features-new/transactions/selectors';
 import { purchasesAtom } from '../../credit-card/atoms';
 import { fixedCostsAtom } from '../../fixed-costs/atoms';
 
@@ -25,7 +24,7 @@ export const currentMonthTotalExpensesAtom = atom((get) => {
     const expDate = new Date(exp.date);
     return expDate >= monthStart && expDate <= monthEnd;
   });
-  const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.amount, 0);
+  const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
   // Credit card purchases
   const monthPurchases = purchases.filter((p) => {
@@ -51,7 +50,7 @@ export const currentMonthTotalIncomeAtom = atom((get) => {
     return incomeDate >= monthStart && incomeDate <= monthEnd;
   });
 
-  return monthIncomes.reduce((acc, income) => acc + income.amount, 0);
+  return monthIncomes.reduce((acc, income) => acc + income.value, 0);
 });
 
 // Burn Rate calculation
@@ -114,7 +113,7 @@ export const expenseDistributionByCategoryAtom = atom((get): DistributionItem[] 
     })
     .forEach((exp) => {
       const current = categoryMap.get(exp.category) || 0;
-      categoryMap.set(exp.category, current + exp.amount);
+      categoryMap.set(exp.category, current + exp.value);
     });
 
   // Add credit card purchases
@@ -154,8 +153,10 @@ export const expenseDistributionByPaymentMethodAtom = atom((get): DistributionIt
       return expDate >= monthStart && expDate <= monthEnd;
     })
     .forEach((exp) => {
-      const current = methodMap.get(exp.paymentMethod) || 0;
-      methodMap.set(exp.paymentMethod, current + exp.amount);
+      if (exp.paymentMethod) {
+        const current = methodMap.get(exp.paymentMethod) || 0;
+        methodMap.set(exp.paymentMethod, current + exp.value);
+      }
     });
 
   // Add credit card purchases

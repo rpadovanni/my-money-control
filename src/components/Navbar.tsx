@@ -1,4 +1,4 @@
-import { CreditCard as CreditCardIcon, Wallet, LayoutDashboard, CheckSquare, TrendingUp, Home, Heart, Target, Flag, Settings as SettingsIcon, LineChart, BarChart3 } from 'lucide-react';
+import { CreditCard as CreditCardIcon, ArrowRightLeft, LayoutDashboard, CheckSquare, Home, Target, Settings as SettingsIcon, LineChart, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -14,19 +14,14 @@ const features = [
     icon: LayoutDashboard,
   },
   {
+    id: 'transactions',
+    label: 'Transações',
+    icon: ArrowRightLeft,
+  },
+  {
     id: 'credit-card',
     label: 'Cartão de Crédito',
     icon: CreditCardIcon,
-  },
-  {
-    id: 'expenses',
-    label: 'Despesas',
-    icon: Wallet,
-  },
-  {
-    id: 'income',
-    label: 'Receitas',
-    icon: TrendingUp,
   },
   {
     id: 'fixed-costs',
@@ -34,29 +29,19 @@ const features = [
     icon: Home,
   },
   {
-    id: 'health',
-    label: 'Saúde',
-    icon: Heart,
-  },
-  {
-    id: 'budgets',
-    label: 'Orçamentos',
+    id: 'budget',
+    label: 'Orçamento',
     icon: Target,
-  },
-  {
-    id: 'savings-goals',
-    label: 'Metas',
-    icon: Flag,
-  },
-  {
-    id: 'investments',
-    label: 'Investimentos',
-    icon: LineChart,
   },
   {
     id: 'metrics',
     label: 'Métricas',
     icon: BarChart3,
+  },
+  {
+    id: 'investments',
+    label: 'Investimentos',
+    icon: LineChart,
   },
   {
     id: 'checklist',

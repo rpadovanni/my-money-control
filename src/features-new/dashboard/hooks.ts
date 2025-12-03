@@ -1,11 +1,12 @@
 import { useAtomValue } from 'jotai';
-import { dashboardSummaryAtom } from './selectors';
+import { dashboardSummaryAtom, monthlySpendingAtom } from './selectors';
 
 export function useDashboard() {
   const summary = useAtomValue(dashboardSummaryAtom);
+  const monthlySpending = useAtomValue(monthlySpendingAtom);
 
   return {
     summary,
+    monthlySpending,
   };
 }
-
