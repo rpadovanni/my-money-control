@@ -8,7 +8,7 @@ import Budget from './features-new/budget';
 import Metrics from './features-new/metrics';
 import Checklist from './features-new/checklist';
 import Settings from './features-new/settings';
-import { ThemeProvider } from './features/settings/components/ThemeProvider';
+import { ThemeProvider } from './features-new/settings/components/ThemeProvider';
 import './App.css';
 
 function App() {

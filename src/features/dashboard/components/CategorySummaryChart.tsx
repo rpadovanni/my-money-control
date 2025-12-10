@@ -1,9 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { useDashboard } from '../hooks';
 import { formatCurrency } from '../utils';
 import { Pie, PieChart, Cell } from 'recharts';
@@ -38,9 +34,7 @@ export function CategorySummaryChart() {
       </CardHeader>
       <CardContent>
         {chartData.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">
-            Nenhum dado disponível
-          </p>
+          <p className="text-muted-foreground py-8 text-center">Nenhum dado disponível</p>
         ) : (
           <ChartContainer config={chartConfig}>
             <PieChart>
@@ -66,20 +60,14 @@ export function CategorySummaryChart() {
                     const data = payload[0];
                     const chartItem = chartData.find((d) => d.name === data.name);
                     return (
-                      <div className="rounded-lg border bg-background p-2 shadow-sm">
+                      <div className="bg-background rounded-lg border p-2 shadow-sm">
                         <div className="grid gap-2">
                           <div className="flex items-center justify-between gap-4">
-                            <span className="text-sm font-medium">
-                              {data.name}
-                            </span>
-                            <span className="text-sm font-bold">
-                              {formatCurrency(data.value as number)}
-                            </span>
+                            <span className="text-sm font-medium">{data.name}</span>
+                            <span className="text-sm font-bold">{formatCurrency(data.value as number)}</span>
                           </div>
                           {chartItem && (
-                            <div className="text-xs text-muted-foreground">
-                              {chartItem.percentage}% do total
-                            </div>
+                            <div className="text-muted-foreground text-xs">{chartItem.percentage}% do total</div>
                           )}
                         </div>
                       </div>
@@ -95,4 +83,3 @@ export function CategorySummaryChart() {
     </Card>
   );
 }
-

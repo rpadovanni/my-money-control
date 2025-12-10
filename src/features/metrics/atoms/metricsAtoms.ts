@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
 import type { BurnRate, SavingRate, ExpenseDistribution, DistributionItem } from '../types';
-import { expensesAtom, incomesAtom } from '../../features-new/transactions/selectors';
-import { totalCurrentMonthPurchasesAtom } from '../../features-new/credit-card/selectors';
-import { getMonthlyFixedCostsAtom } from '../../features-new/fixed-costs/selectors';
+import { useStore } from '@/shared/store';
+// Note: These atoms now need to be computed from the Zustand store
+// For now, keeping the structure but we'll need to refactor useMetrics to use the store directly
 
 // Helper to get current month data
 const getCurrentMonthData = () => {

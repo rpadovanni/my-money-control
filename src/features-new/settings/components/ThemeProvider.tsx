@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
-import { useAtomValue } from 'jotai';
-import { themeAtom } from '../selectors';
+import { useStore } from '../../../shared/store';
 import { initializeTheme } from '../utils';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const theme = useAtomValue(themeAtom);
+  const theme = useStore((state) => state?.settings?.theme ?? 'system');
 
   useEffect(() => {
-    initializeTheme(theme);
+    if (theme) {
+      initializeTheme(theme);
+    }
   }, [theme]);
 
   return <>{children}</>;

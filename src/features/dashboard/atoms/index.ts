@@ -12,9 +12,7 @@ export const dashboardSummaryAtom = atom<DashboardSummary | null>(null);
 export const currentMonthSpendingAtom = atom((get) => {
   const monthly = get(monthlySpendingAtom);
   const now = new Date();
-  return monthly.find(
-    (m) => m.month === now.getMonth() + 1 && m.year === now.getFullYear()
-  );
+  return monthly.find((m) => m.month === now.getMonth() + 1 && m.year === now.getFullYear());
 });
 
 export const totalMonthlySpendingAtom = atom((get) => {
@@ -24,16 +22,11 @@ export const totalMonthlySpendingAtom = atom((get) => {
 
 export const topCategoriesAtom = atom((get) => {
   const categories = get(categorySummaryAtom);
-  return [...categories]
-    .sort((a, b) => b.amount - a.amount)
-    .slice(0, 5);
+  return [...categories].sort((a, b) => b.amount - a.amount).slice(0, 5);
 });
 
 export const currentWeekSpendingAtom = atom((get) => {
   const weekly = get(weeklySpendingAtom);
   const now = new Date();
-  return weekly.find(
-    (w) => now >= w.startDate && now <= w.endDate
-  );
+  return weekly.find((w) => now >= w.startDate && now <= w.endDate);
 });
-

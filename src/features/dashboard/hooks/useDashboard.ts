@@ -9,13 +9,13 @@ import {
   topCategoriesAtom,
   currentWeekSpendingAtom,
 } from '../atoms';
-import { useTransactions } from '../../features-new/transactions/hooks';
-import { usePurchases, useInvoices, useBudget } from '../../credit-card/hooks';
+import { useTransactions } from '@/features/transactions';
+import { usePurchases, useInvoices, useBudget } from '../../../features-new/credit-card/hooks';
 import { getWeeksOfMonth, calculateMonthForecast, getLastMonths, calculatePercentage } from '../utils';
 import { useMemo } from 'react';
 import type { MonthlySpending, CategorySummary, WeeklySpending, MonthForecast, DashboardSummary } from '../types';
-import { TRANSACTION_CATEGORIES } from '../../features-new/transactions/types';
-import { PURCHASE_CATEGORIES } from '../../credit-card/types';
+import { TRANSACTION_CATEGORIES } from '@/shared/store/types/transactions';
+import { PURCHASE_CATEGORIES } from '../../../features-new/credit-card/types';
 
 export function useDashboard() {
   const { expenses: allExpenses } = useTransactions();
@@ -160,7 +160,7 @@ export function useDashboard() {
       const expDate = new Date(exp.date);
       return expDate >= monthStart && expDate <= monthEnd;
     });
-    const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.amount, 0);
+    const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
     const monthPurchases = purchases.filter((p) => {
       const purchaseDate = new Date(p.date);
@@ -187,7 +187,7 @@ export function useDashboard() {
       const expDate = new Date(exp.date);
       return expDate >= monthStart && expDate <= monthEnd;
     });
-    const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.amount, 0);
+    const expensesTotal = monthExpenses.reduce((acc, exp) => acc + exp.value, 0);
 
     const monthPurchases = purchases.filter((p) => {
       const purchaseDate = new Date(p.date);

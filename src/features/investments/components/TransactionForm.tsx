@@ -12,8 +12,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import type { TransactionFormData, TransactionType } from '../types';
-import { TRANSACTION_TYPES } from '../types';
+import type { TransactionFormData, TransactionType } from '@/shared/store/types/investments';
+import { TRANSACTION_TYPES } from '@/shared/store/types/investments';
 import { useInvestments } from '../hooks';
 
 interface TransactionFormProps {
@@ -23,7 +23,7 @@ interface TransactionFormProps {
 }
 
 export function TransactionForm({ open, onOpenChange, assetId }: TransactionFormProps) {
-  const { addTransaction, assets } = useInvestments();
+  const { addTransaction, allAssets } = useInvestments();
 
   const form = useForm<TransactionFormData>({
     defaultValues: {
@@ -78,7 +78,7 @@ export function TransactionForm({ open, onOpenChange, assetId }: TransactionForm
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {assets.map((asset) => (
+                        {allAssets.map((asset) => (
                           <SelectItem key={asset.id} value={asset.id}>
                             {asset.code} - {asset.name}
                           </SelectItem>

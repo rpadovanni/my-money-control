@@ -39,4 +39,3 @@ export interface DashboardSummary {
   budgetRemaining: number;
   budgetPercentage: number;
 }
-

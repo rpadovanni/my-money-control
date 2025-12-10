@@ -36,10 +36,10 @@ export function getWeeksOfMonth(year: number, month: number): WeeklySpending[] {
   const weeks: WeeklySpending[] = [];
   const firstDay = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0);
-  
+
   let currentWeek = 1;
   let currentDate = new Date(firstDay);
-  
+
   while (currentDate <= lastDay) {
     const weekStart = new Date(currentDate);
     // Find Sunday of the week (or start of month if it's the first week)
@@ -49,14 +49,14 @@ export function getWeeksOfMonth(year: number, month: number): WeeklySpending[] {
       const dayOfWeek = currentDate.getDay();
       weekStart.setDate(currentDate.getDate() - dayOfWeek);
     }
-    
+
     // Find Saturday of the week (or end of month if it's the last week)
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 6);
     if (weekEnd > lastDay) {
       weekEnd.setTime(lastDay.getTime());
     }
-    
+
     weeks.push({
       week: currentWeek,
       startDate: new Date(weekStart),
@@ -65,25 +65,21 @@ export function getWeeksOfMonth(year: number, month: number): WeeklySpending[] {
       expenses: 0,
       creditCard: 0,
     });
-    
+
     // Move to next week
     currentDate.setDate(weekEnd.getDate() + 1);
     currentWeek++;
-    
+
     if (currentDate > lastDay) break;
   }
-  
+
   return weeks;
 }
 
 /**
  * Calculate month forecast based on current spending
  */
-export function calculateMonthForecast(
-  currentSpent: number,
-  currentDay: number,
-  totalDays: number
-): MonthForecast {
+export function calculateMonthForecast(currentSpent: number, currentDay: number, totalDays: number): MonthForecast {
   const daysRemaining = totalDays - currentDay;
   const dailyAverage = currentDay > 0 ? currentSpent / currentDay : 0;
   const projectedTotal = dailyAverage * totalDays;
@@ -104,7 +100,7 @@ export function calculateMonthForecast(
 export function getLastMonths(count: number): Array<{ month: number; year: number }> {
   const months: Array<{ month: number; year: number }> = [];
   const now = new Date();
-  
+
   for (let i = count - 1; i >= 0; i--) {
     const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
     months.push({
@@ -112,7 +108,7 @@ export function getLastMonths(count: number): Array<{ month: number; year: numbe
       year: date.getFullYear(),
     });
   }
-  
+
   return months;
 }
 
@@ -123,4 +119,3 @@ export function calculatePercentage(part: number, total: number): number {
   if (total === 0) return 0;
   return (part / total) * 100;
 }
-

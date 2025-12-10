@@ -1,51 +1,34 @@
 import { useState } from 'react';
-import { Navbar } from './components/Navbar';
-import Dashboard from './features-new/dashboard';
-import Transactions from './features-new/transactions';
-import CreditCard from './features-new/credit-card';
-import FixedCosts from './features-new/fixed-costs';
-import Budget from './features-new/budget';
-import Metrics from './features-new/metrics';
-import Checklist from './features-new/checklist';
-import Settings from './features-new/settings';
-import Investments from './features/investments';
+import { AppLayout } from './components/layout/AppLayout';
+import { DashboardPage } from './pages/dashboard/DashboardPage';
+import { PlanningPage } from './pages/planning/PlanningPage';
+import { TransactionsPage } from './pages/transactions';
+import { InvestmentsPage } from './pages/investments';
 import { ThemeProvider } from './features-new/settings/components/ThemeProvider';
-import './App.css';
 
 function App() {
-  const [currentFeature, setCurrentFeature] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'planning' | 'transactions' | 'investments'>('dashboard');
 
-  const renderFeature = () => {
-    switch (currentFeature) {
+  const renderPage = () => {
+    switch (currentPage) {
       case 'dashboard':
-        return <Dashboard />;
+        return <DashboardPage />;
+      case 'planning':
+        return <PlanningPage />;
       case 'transactions':
-        return <Transactions />;
-      case 'credit-card':
-        return <CreditCard />;
-      case 'fixed-costs':
-        return <FixedCosts />;
-      case 'budget':
-        return <Budget />;
-      case 'metrics':
-        return <Metrics />;
-      case 'checklist':
-        return <Checklist />;
-      case 'settings':
-        return <Settings />;
+        return <TransactionsPage />;
       case 'investments':
-        return <Investments />;
+        return <InvestmentsPage />;
       default:
-        return <Dashboard />;
+        return <DashboardPage />;
     }
   };
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-background">
-        <Navbar currentFeature={currentFeature} onFeatureChange={setCurrentFeature} />
-        <main>{renderFeature()}</main>
-      </div>
+      <AppLayout currentPage={currentPage} onPageChange={setCurrentPage}>
+        {renderPage()}
+      </AppLayout>
     </ThemeProvider>
   );
 }

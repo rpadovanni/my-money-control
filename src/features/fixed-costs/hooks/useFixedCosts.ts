@@ -9,7 +9,7 @@ import {
 } from '../atoms';
 import type { FixedCost, FixedCostFormData } from '../types';
 import { sortFixedCostsByDueDay } from '../utils';
-import { useBudget } from '../../credit-card/hooks/useBudget';
+import { useBudget } from '../../../features-new/credit-card/hooks';
 
 export function useFixedCosts() {
   const [fixedCosts, setFixedCosts] = useAtom(fixedCostsAtom);

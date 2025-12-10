@@ -1,9 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { useDashboard } from '../hooks';
 import { formatCurrency, formatMonth } from '../utils';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
@@ -40,19 +36,12 @@ export function MonthlySpendingChart() {
       </CardHeader>
       <CardContent>
         {chartData.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">
-            Nenhum dado disponível
-          </p>
+          <p className="text-muted-foreground py-8 text-center">Nenhum dado disponível</p>
         ) : (
           <ChartContainer config={chartConfig}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-              />
+              <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
               <YAxis
                 tickLine={false}
                 axisLine={false}
@@ -69,4 +58,3 @@ export function MonthlySpendingChart() {
     </Card>
   );
 }
-

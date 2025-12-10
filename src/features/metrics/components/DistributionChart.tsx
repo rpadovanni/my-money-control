@@ -10,8 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useMetrics } from '../hooks';
 import { formatCurrency, formatPercent } from '../utils';
 import { PieChart, Pie, Cell, BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
-import { TRANSACTION_CATEGORIES, PAYMENT_METHODS } from '../../features-new/transactions/types';
-import { PURCHASE_CATEGORIES } from '../../credit-card/types';
+import { TRANSACTION_CATEGORIES, PAYMENT_METHODS } from '@/shared/store/types/transactions';
+import { PURCHASE_CATEGORIES } from '../../../features-new/credit-card/types';
 
 const CHART_COLORS = [
   'hsl(var(--chart-1))',
